@@ -1,25 +1,45 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'todolist',
+      meta: { auth: true, title: 'todolist' },
+      component: () => import('./views/ToDoList.vue')
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/Login.vue')
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem('todolist-token')
+  console.log(token)
+  if (!token && to.name !== 'login') {
+    // 未登录且要跳转的页面不是登录页
+    next({
+      name: 'login' // 跳转到登录页
+    })
+  } else if (!token && to.name === 'login') {
+    // 未登陆且要跳转的页面是登录页
+    next() // 跳转
+  } else if (token && to.name === 'login') {
+    // 已登录且要跳转的页面是登录页
+    next({
+      name: 'todolist' // 跳转到home页
+    })
+  } else {
+    next()
+  }
+})
+
+export default router
