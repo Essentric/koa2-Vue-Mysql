@@ -23,7 +23,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('todolist-token')
-  console.log(token)
+  // console.log(token)
   if (!token && to.name !== 'login') {
     // 未登录且要跳转的页面不是登录页
     next({

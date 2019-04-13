@@ -87,13 +87,12 @@ export default {
       this.$api.todolist.getList(this.user.id)
         .then((res) => {
           if (res.data.success) {
-            console.log(res)
             this.list = res.data.data
           } else {
             this.$notice.info({ title: res.data.msg })
           }
         }, ({ res }) => {
-          console.log(res)
+          // console.log(res)
         })
     },
     addTodos () {
@@ -110,7 +109,7 @@ export default {
             this.getToDoList()
           }
         }, ({ res }) => {
-          console.log(res)
+          // console.log(res)
         })
       this.todos = '' // 清空输入框
     },
@@ -125,7 +124,7 @@ export default {
             this.$notice.info({ title: res.data.msg })
           }
         }, ({ res }) => {
-          console.log(res)
+          // console.log(res)
         })
     },
     updateTodos (item) {

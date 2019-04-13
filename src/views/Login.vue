@@ -42,15 +42,14 @@ export default {
       loading: false
     }
   },
-  created () {
-    console.log(this.$route)
-  },
+  // created () {
+  //   console.log(this.$route)
+  // },
   methods: {
     onLogin () {
       this.loading = true
       this.$store.dispatch('user/Login', this.user)
         .then((res) => {
-          console.log(res)
           if (res.data.success) {
             this.$notice.success({ title: res.data.msg })
             this.$router.push({ name: 'todolist' })
@@ -58,7 +57,7 @@ export default {
             this.$notice.info({ title: res.data.msg })
           }
         }, ({ res }) => {
-          console.log(res)
+          // console.log(res)
         })
         .finally(() => {
           this.loading = false
